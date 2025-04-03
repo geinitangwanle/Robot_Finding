@@ -5,17 +5,17 @@ A*算法实现
 '''
 def a_star(array, start, goal):
     # 定义相邻节点的偏移量，分别表示右、左、下、上
-    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)] #允许移动的 四个方向（右、左、下、上）。
     # 已访问节点集合
-    close_set = set()
+    close_set = set() # 存储已访问的节点
     # 记录节点的父节点，用于回溯路径
-    came_from = {}
+    came_from = {} # 记录路径，用于回溯
     # 从起点到每个节点的实际代价
-    gscore = {start: 0}
+    gscore = {start: 0} # start 到当前节点的最短路径代价
     # 从起点经过每个节点到目标节点的总代价估计值
-    fscore = {start: heuristic(start, goal)}
+    fscore = {start: heuristic(start, goal)}  # 启发式总代价估计
     # 优先队列，用于存储待扩展的节点
-    oheap = []
+    oheap = [] # 优先队列
 
     # 将起点加入优先队列
     heapq.heappush(oheap, (fscore[start], start))
