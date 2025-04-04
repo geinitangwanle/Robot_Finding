@@ -1,5 +1,5 @@
 import heapq
-from heuristics import heuristic
+from function.heuristics import heuristic
 
 def a_star(array, start, goal):
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)]

@@ -1,6 +1,6 @@
 import numpy as np
-from Astar import a_star
-from visualize import AStarVisualizer
+from Model.Astar import a_star
+from function.visualize import AStarVisualizer
 import matplotlib.pyplot as plt
 
 
@@ -17,12 +17,12 @@ def read_scene_from_file(file_path):
     return np.array(scene)
 
 if __name__ == "__main__":
-    file_path = "complex_scene.txt"  # 假设你的地图文件名为 complex_scene.txt
+    file_path = "scene/complex_scene.txt"  # 假设你的地图文件名为 complex_scene.txt
     array = read_scene_from_file(file_path)
 
     # 设置起点和终点
     start = (0, 0)  # 起点坐标
-    goal =  (19,19)  # 终点坐标
+    goal =  (29,29)  # 终点坐标
 
     # 调用A*算法
     path, search_steps = a_star(array, start, goal)

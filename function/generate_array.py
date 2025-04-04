@@ -22,13 +22,13 @@ def generate_complex_scene(width, height, obstacle_density=0.2, num_islands=3, i
     return scene
 
 # 示例：生成一个 20x20 的复杂场景图
-width = 20
-height = 20
+width = 30
+height = 30
 scene = generate_complex_scene(width, height)
 print(scene)
 scene = scene.astype(int)
 
 # 将生成的场景图保存为文本文件
-with open("complex_scene.txt", "w") as f:
+with open("scene/complex_scene.txt", "w") as f:
     for row in scene:
         f.write(" ".join(map(str, row)) + "\n")
