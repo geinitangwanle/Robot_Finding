@@ -1,29 +1,36 @@
+import numpy as np
 from Astar import a_star
 from visualize import AStarVisualizer
 import matplotlib.pyplot as plt
 
+
+def read_scene_from_file(file_path):
+    """
+    从文本文件中读取场景图
+    """
+    scene = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            # 移除多余空格并过滤非数字字符
+            row = [int(cell) for cell in line.strip() if cell.isdigit()]
+            scene.append(row)
+    return np.array(scene)
+
 if __name__ == "__main__":
-    # 示例场景图矩阵
-    array = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 1, 1, 1, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0],
-        [0, 1, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 1, 1, 1, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-    ]
-    #第一个为行，第二个为列
-    start = (2, 3)
-    goal = (4, 7)
+    file_path = "complex_scene.txt"  # 假设你的地图文件名为 complex_scene.txt
+    array = read_scene_from_file(file_path)
+
+    # 设置起点和终点
+    start = (0, 0)  # 起点坐标
+    goal =  (19,19)  # 终点坐标
 
     # 调用A*算法
     path, search_steps = a_star(array, start, goal)
+
     # 检查数据
     print(f"Path: {path}")
     print(f"Search steps: {len(search_steps)}")
+
     # 可视化搜索过程
     visualizer = AStarVisualizer(array, path, search_steps, start, goal)
     plt.show()
