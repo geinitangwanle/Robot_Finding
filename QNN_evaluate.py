@@ -3,7 +3,6 @@ from function.visualize import visualize_search
 import torch
 import numpy as np
 
-
 # 从txt文件读取地图
 def load_map_from_file(file_path):
     with open(file_path, 'r') as file:
@@ -13,20 +12,18 @@ def load_map_from_file(file_path):
         grid.append([int(x) for x in line.strip().split()])
     return grid
 
-
 # 加载地图并提取障碍物位置
-map_file = "scene/complex_scene.txt"  # 替换为实际地图文件路径
+map_file = "scene_data/complex_scene_1.txt"  # 替换为实际地图文件路径
 grid_map = load_map_from_file(map_file)
 obstacles = [(i, j) for i in range(len(grid_map)) for j in range(len(grid_map[0])) if grid_map[i][j] == 1]
-# print("Obstacles:", obstacles)
 
 grid_size = (len(grid_map), len(grid_map[0]))  # 网格大小
 start = (0, 0)
-goal = (9, 9)
+goal = (29, 29)
 
 # 状态和动作编码
-state_size = grid_size[0] * grid_size[1]  # 表示环境中状态的数量，用于确定 Q 表的行数。
-action_size = 4  # 表示智能体可以采取的动作数量，用于确定 Q 表的列数。
+state_size = grid_size[0] * grid_size[1]
+action_size = 4
 
 # 初始化智能体
 agent = DQNAgent(state_size, action_size)

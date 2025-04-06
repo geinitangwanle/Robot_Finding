@@ -17,7 +17,7 @@ def read_scene_from_file(file_path):
     return np.array(scene)
 
 if __name__ == "__main__":
-    file_path = "scene/complex_scene.txt"  # 假设你的地图文件名为 complex_scene.txt
+    file_path = "scene_data/complex_scene_1.txt"  # 假设你的地图文件名为 complex_scene.txt
     array = read_scene_from_file(file_path)
 
     # 设置起点和终点
