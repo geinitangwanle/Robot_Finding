@@ -54,7 +54,13 @@ for episode in range(num_episodes):
             reward = 100
             done = True
         else:
-            reward = -1
+            # 根据目标点远近给予奖励
+            distance_before = abs(state[0] - goal[0]) + abs(state[1] - goal[1])
+            distance_after = abs(next_state[0] - goal[0]) + abs(next_state[1] - goal[1])
+            if distance_after < distance_before:
+                reward = 10  # 靠近目标点，给予正奖励
+            else:
+                reward = -1  # 远离目标点，给予负奖励
 
         next_state_index = next_state[0] * grid_size[1] + next_state[1]
         

@@ -61,7 +61,7 @@ def generate_complex_scene(width, height, obstacle_density=0.2, num_islands=3, i
 width = 30
 height = 30
 # 批量生成多个场景图并保存
-num_scenes = 1  # 生成的场景图数量
+num_scenes = 100  # 生成的场景图数量
 output_dir = "scene_data/"
 
 os.makedirs(output_dir, exist_ok=True)

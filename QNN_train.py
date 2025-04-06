@@ -15,10 +15,14 @@ def load_map_from_file(file_path):
 # 从scene_data文件夹中加载所有地图文件
 scene_data_folder = "scene_data"
 map_file = "scene_data/complex_scene_1.txt"
+# 批量读取scene_data文件夹中的所有地图文件
+map_files = [os.path.join(scene_data_folder, f) for f in os.listdir(scene_data_folder) if f.endswith('.txt')]
 # 训练函数
-def train_dqn(agent, num_episodes=200, max_steps_per_episode=100):
+def train_dqn(agent, num_episodes=100000, max_steps_per_episode=100):
     global_step = 0
     for episode in range(num_episodes):
+        # 随机选择一个地图文件
+        map_file = random.choice(map_files)
         grid_map = load_map_from_file(map_file)
         obstacles = [(i, j) for i in range(len(grid_map)) for j in range(len(grid_map[0])) if grid_map[i][j] == 1]
         grid_size = (len(grid_map), len(grid_map[0]))
@@ -43,11 +47,11 @@ def train_dqn(agent, num_episodes=200, max_steps_per_episode=100):
             if done:
                 break
 
-        if (episode + 1) % 100 == 0:
-            print(f"Episode {episode + 1}/{num_episodes}, Total Reward: {total_reward}")
+        
+        print(f"Episode {episode + 1}/{num_episodes}, Total Reward: {total_reward}")
 
     # 保存模型
-    torch.save(agent.model.state_dict(), 'dqn_model.pth')
+    torch.save(agent.model.state_dict(), 'dqn_model_pro.pth')
 
 # 初始化智能体
 grid_map = load_map_from_file(map_file)

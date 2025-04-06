@@ -37,7 +37,7 @@ class DQNAgent:
         self.learning_rate_scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=100, gamma=0.9)
 
     def choose_action(self, state):
-        if np.random.uniform(0, 1) < 0.1:
+        if np.random.uniform(0, 1) < 0.2:
             return np.random.choice(self.action_size)
         else:
             state = torch.FloatTensor(state).unsqueeze(0)
@@ -111,11 +111,12 @@ class MapEnvironment:
 
         # 计算到目标点的距离
         current_distance = np.linalg.norm(np.array(self.current_state) - np.array(self.goal))
+
         if done:
             reward = 100
         else:
             # 根据距离目标点的远近给予奖励
-            reward = -1 + (np.linalg.norm(np.array((x, y)) - np.array(self.goal)) - current_distance) * 10
+            reward = -1 + (np.linalg.norm(np.array((x, y)) - np.array(self.goal)) - current_distance)
 
         return self._state_to_vector(self.current_state), reward, done
 
