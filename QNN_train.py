@@ -10,27 +10,27 @@ def load_map_from_file(file_path):
     return grid
 
 # 加载地图并提取障碍物位置
-map_file = "scene/custom_scene.txt"  # 替换为实际地图文件路径
+map_file = "scene/complex_scene.txt"  # 替换为实际地图文件路径
 grid_map = load_map_from_file(map_file)
 obstacles = [(i, j) for i in range(len(grid_map)) for j in range(len(grid_map[0])) if grid_map[i][j] == 1]
 #print("Obstacles:", obstacles)
 
 grid_size = (len(grid_map), len(grid_map[0])) #网格大小
-start = (2, 3)
-goal = (4, 7)
+start = (0, 0)
+goal = (9, 9)
 
 # 状态和动作编码
 state_size = grid_size[0] * grid_size[1] #表示环境中状态的数量，用于确定 Q 表的行数。
 action_size = 4 #表示智能体可以采取的动作数量，用于确定 Q 表的列数。
 
 # 训练函数
-def train_dqn(agent, env, num_episodes=1000, max_steps_per_episode=100, epsilon=0.1):
+def train_dqn(agent, env, num_episodes=1000, max_steps_per_episode=100):
     for episode in range(num_episodes):
         state = env.reset()
         total_reward = 0
 
         for step in range(max_steps_per_episode):
-            action = agent.choose_action(state, epsilon)
+            action = agent.choose_action(state)
             next_state, reward, done = env.step(action)
             agent.update_model(state, action, reward, next_state, done)
             state = next_state

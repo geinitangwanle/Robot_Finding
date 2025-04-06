@@ -21,9 +21,9 @@ def generate_complex_scene(width, height, obstacle_density=0.2, num_islands=3, i
 
     return scene
 
-# 示例：生成一个 20x20 的复杂场景图
-width = 30
-height = 30
+# 示例：生成一个 10*10 的复杂场景图
+width = 10
+height = 10
 scene = generate_complex_scene(width, height)
 print(scene)
 scene = scene.astype(int)

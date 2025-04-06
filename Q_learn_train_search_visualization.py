@@ -13,7 +13,7 @@ def load_map_from_file(file_path):
     return grid
 
 # 加载地图并提取障碍物位置
-map_file = "scene/custom_scene.txt"  # 替换为实际地图文件路径
+map_file = "scene/complex_scene.txt"  # 替换为实际地图文件路径
 grid_map = load_map_from_file(map_file)
 obstacles = [(i, j) for i in range(len(grid_map)) for j in range(len(grid_map[0])) if grid_map[i][j] == 1]
 print("Obstacles:", obstacles)
