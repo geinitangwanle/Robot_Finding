@@ -8,14 +8,12 @@ class DQN(nn.Module):
     def __init__(self, state_size, action_size):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_size, 64)
-        self.fc2 = nn.Linear(64, 128)
-        self.fc3 = nn.Linear(128, 64)
+        self.fc2 = nn.Linear(64, 64)
         self.fc4 = nn.Linear(64, action_size)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
-        x = torch.relu(self.fc3(x))
         return self.fc4(x)
 
 class DQNAgent:
@@ -38,9 +36,11 @@ class DQNAgent:
         self.criterion = nn.MSELoss()
         self.learning_rate_scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=100, gamma=0.9)
 
-    def choose_action(self, state):
-        if np.random.uniform(0, 1) < 0.2:
-            return np.random.choice(self.action_size)
+    def choose_action(self, state, epsilon=None):
+        if epsilon is None:
+            epsilon = self.epsilon
+        if np.random.uniform(0, 1) < epsilon:  # 探索
+            return np.random.choice(self.action_size)  # 随机选择动作
         else:
             state = torch.FloatTensor(state).unsqueeze(0)
             q_values = self.model(state)
@@ -92,6 +92,9 @@ class MapEnvironment:
 
     def step(self, action):
         x, y = self.current_state
+        # 计算上一个状态到目标点的距离
+        prev_distance = np.linalg.norm(np.array((x, y)) - np.array(self.goal))
+
         if action == 0:  # 上
             new_x = max(0, x - 1)
             new_y = y
@@ -108,17 +111,21 @@ class MapEnvironment:
         if (new_x, new_y) in self.obstacles:
             new_x, new_y = x, y
 
+        moved = (new_x, new_y) != (x, y)
         self.current_state = (new_x, new_y)
         done = self.current_state == self.goal
 
-        # 计算到目标点的距离
+        # 计算当前状态到目标点的距离
         current_distance = np.linalg.norm(np.array(self.current_state) - np.array(self.goal))
 
         if done:
             reward = 100
         else:
-            # 根据距离目标点的远近给予奖励
-            reward = -1 + (np.linalg.norm(np.array((x, y)) - np.array(self.goal)) - current_distance)
+            # 增加对移动的奖励，对原地不动给予惩罚
+            if moved:
+                reward = -1 + (prev_distance - current_distance) * 10
+            else:
+                reward = -5
 
         return self._state_to_vector(self.current_state), reward, done
 

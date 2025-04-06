@@ -28,7 +28,7 @@ action_size = 4
 # 初始化智能体
 agent = DQNAgent(state_size, action_size)
 # 加载模型参数
-agent.model.load_state_dict(torch.load('dqn_model.pth'))
+agent.model.load_state_dict(torch.load('dqn_model_1.pth'))
 agent.model.eval()  # 设置为评估模式
 
 # 初始化环境
@@ -44,7 +44,7 @@ step_count = 0
 prev_state = None  # 用于记录上一个状态
 
 while not done and step_count < max_steps:
-    action = agent.choose_action(state)  # 将上一个状态传递给选择动作的方法
+    action = agent.choose_action(state, epsilon= 0)  # 将上一个状态传递给选择动作的方法
     next_state, _, done = env.step(action)
     path.append(env.current_state)
     # 记录搜索步骤
