@@ -51,5 +51,5 @@ def a_star(array, start, goal):
                 came_from[neighbor] = current
                 gscore[neighbor] = tentative_g_score
                 #print(f"tentative_g_score: {tentative_g_score}")
-                fscore[neighbor] = tentative_g_score + heuristic(neighbor, goal)
+                fscore[neighbor] = 0.4*tentative_g_score + 0.6*heuristic(neighbor, goal) #这里可以修改代价函数和启发函数来整算法的搜索效果
                 heapq.heappush(oheap, (fscore[neighbor], neighbor))

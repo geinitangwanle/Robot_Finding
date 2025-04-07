@@ -12,14 +12,14 @@ def load_map_from_file(file_path):
     return grid
 
 # 加载地图并提取障碍物位置
-map_file = "scene_data/complex_scene_1.txt"  # 替换为实际地图文件路径
+map_file = "scene/custom_scene.txt"  # 替换为实际地图文件路径
 grid_map = load_map_from_file(map_file)
 obstacles = [(i, j) for i in range(len(grid_map)) for j in range(len(grid_map[0])) if grid_map[i][j] == 1]
 print("Obstacles:", obstacles)
 
 grid_size = (len(grid_map), len(grid_map[0])) #网格大小
-start = (0, 0)
-goal = (29, 29)
+start = (2, 3)
+goal = (4, 7)
 
 # 状态和动作编码
 state_size = grid_size[0] * grid_size[1] #表示环境中状态的数量，用于确定 Q 表的行数。
@@ -54,13 +54,7 @@ for episode in range(num_episodes):
             reward = 100
             done = True
         else:
-            # 根据目标点远近给予奖励
-            distance_before = abs(state[0] - goal[0]) + abs(state[1] - goal[1])
-            distance_after = abs(next_state[0] - goal[0]) + abs(next_state[1] - goal[1])
-            if distance_after < distance_before:
-                reward = 10  # 靠近目标点，给予正奖励
-            else:
-                reward = -1  # 远离目标点，给予负奖励
+            reward = -1
 
         next_state_index = next_state[0] * grid_size[1] + next_state[1]
         
