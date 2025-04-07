@@ -11,6 +11,7 @@ class AStarVisualizer:
         self.start = start
         self.goal = goal
         self.current_frame = 0
+        
 
         # 创建图形
         self.fig, self.ax = plt.subplots(figsize=(5, 5))
@@ -26,7 +27,7 @@ class AStarVisualizer:
 
         # 显示初始帧
         self.update_frame(0)
-        self.ax.set_title("A* Search Algorithm Visualization (Auto-playing)")
+        self.ax.set_title(" Algorithm Visualization (Auto-playing)")
 
         # 创建动画
         self.ani = FuncAnimation(self.fig, self.update_frame, frames=len(self.frames), interval=100, repeat=True)
@@ -130,7 +131,7 @@ class AStarVisualizer:
         else:
             info = "Path found! Animation will restart."
 
-        self.ax.set_title(f"A* Search Algorithm Visualization\n{info}")
+        self.ax.set_title(f" Algorithm Visualization\n{info}")
 
         self.fig.canvas.draw()
 

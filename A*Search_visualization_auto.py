@@ -17,12 +17,12 @@ def read_scene_from_file(file_path):
     return np.array(scene)
 
 if __name__ == "__main__":
-    file_path = "scene_data/complex_scene_1.txt"  # 假设你的地图文件名为 complex_scene.txt
+    file_path = "scene/custom_scene.txt"  # 假设你的地图文件名为 complex_scene.txt
     array = read_scene_from_file(file_path)
 
     # 设置起点和终点
-    start = (0, 0)  # 起点坐标
-    goal =  (29,29)  # 终点坐标
+    start = (2, 3)  # 起点坐标
+    goal =  (4,7)  # 终点坐标
 
     # 调用A*算法
     path, search_steps = a_star(array, start, goal)
